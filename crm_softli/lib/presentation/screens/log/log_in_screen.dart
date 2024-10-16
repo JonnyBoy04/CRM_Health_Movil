@@ -1,3 +1,5 @@
+import 'package:crm_softli/config/services/log/log_service.dart';
+import 'package:crm_softli/infrastructure/models/log_model.dart';
 import 'package:flutter/material.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -24,6 +26,7 @@ class _LogInFormState extends State<_LogInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final LogService logService = LogService();
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +74,13 @@ class _LogInFormState extends State<_LogInForm> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    print('Email: ${_emailController.text}');
-                    print('Password: ${_passwordController.text}');
+                    // print('Email: ${_emailController.text}');
+                    // print('Password: ${_passwordController.text}');
+                    final logModel = LogModel(
+                        gmail: _emailController.text,
+                        password: _passwordController.text);
+                    
+                    logService.login(logModel);
                   }
                 },
                 child: const Text('Iniciar Sesión'),
